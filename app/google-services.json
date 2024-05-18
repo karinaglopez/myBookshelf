@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "991130342784",
+    "firebase_url": "https://myshelf-1cc5e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "myshelf-1cc5e",
+    "storage_bucket": "myshelf-1cc5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991130342784:android:a0eaa6465a88fa30a85d65",
+        "android_client_info": {
+          "package_name": "es.upm.etsisi.cumn.grupoc.myshelf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991130342784-937f80f9i9u7cs03osnq343bl7kq7prn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.upm.etsisi.cumn.grupoc.myshelf",
+            "certificate_hash": "b585c1c02ca6602307b96659f7fcd8fb81cbef34"
+          }
+        },
+        {
+          "client_id": "991130342784-svq6ju229ibc9tnmpqdah51n5j9iej82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF2aHHZIM4zlgU33a-QWct4k5GGgFzpV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991130342784-6ojhm9lhr9djdl0n22e0ejdljvad6fpi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
