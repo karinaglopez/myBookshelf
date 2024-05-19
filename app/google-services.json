@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:991130342784:android:a0eaa6465a88fa30a85d65",
         "android_client_info": {
-          "package_name": "es.upm.etsisi.cumn.grupoc.myshelf"
+          "package_name": "es.upm.etsisi.myBookshelf"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "991130342784-937f80f9i9u7cs03osnq343bl7kq7prn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "es.upm.etsisi.cumn.grupoc.myshelf",
+            "package_name": "es.upm.etsisi.myBookshelf",
             "certificate_hash": "b585c1c02ca6602307b96659f7fcd8fb81cbef34"
           }
         },

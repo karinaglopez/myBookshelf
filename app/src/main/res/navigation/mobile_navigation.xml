@@ -9,17 +9,17 @@
 
     <fragment
         android:id="@+id/bookAddFragment"
-        android:name="es.upm.etsisi.cumn.grupoc.myshelf.ui.bookshelf.AddBook.AddBookFragment"
+        android:name="es.upm.etsisi.myBookshelf.ui.bookshelf.AddBook.AddBookFragment"
         android:label="@string/title_add_book"
         tools:layout="@layout/fragment_add_book">
         <argument
             android:name="myArg"
-            app:argType="es.upm.etsisi.cumn.grupoc.myshelf.ui.bookshelf.shelfitem.EBookShelfItem" />
+            app:argType="es.upm.etsisi.myBookshelf.ui.bookshelf.shelfitem.EBookShelfItem" />
     </fragment>
 
     <fragment
         android:id="@+id/bookShelfListFragment"
-        android:name="es.upm.etsisi.cumn.grupoc.myshelf.BookShelfListFragment"
+        android:name="es.upm.etsisi.myBookshelf.BookShelfListFragment"
         android:label="@string/title_book_shelf_list"
         tools:layout="@layout/fragment_book_shelf_list" >
         <action
@@ -37,12 +37,12 @@
     </fragment>
     <fragment
         android:id="@+id/bookLisitingFragment"
-        android:name="es.upm.etsisi.cumn.grupoc.myshelf.ui.bookshelf.BookListing.BookLisitingFragment"
+        android:name="es.upm.etsisi.myBookshelf.ui.bookshelf.BookListing.BookLisitingFragment"
         android:label="@string/menu_book_list"
         tools:layout="@layout/fragment_book_lisiting">
         <argument
             android:name="myArg"
-            app:argType="es.upm.etsisi.cumn.grupoc.myshelf.ui.bookshelf.shelfitem.EBookShelfItem" />
+            app:argType="es.upm.etsisi.myBookshelf.ui.bookshelf.shelfitem.EBookShelfItem" />
         <action
             android:id="@+id/action_bookLisitingFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />
@@ -53,11 +53,11 @@
 
     <fragment
         android:id="@+id/bookDetailsFragment"
-        android:name="es.upm.etsisi.cumn.grupoc.myshelf.ui.bookshelf.BookDetails.BookDetailsFragment"
+        android:name="es.upm.etsisi.myBookshelf.ui.bookshelf.BookDetails.BookDetailsFragment"
         android:label="@string/menu_book_details"
         tools:layout="@layout/fragment_book_details">
         <argument
             android:name="myArg"
-            app:argType="es.upm.etsisi.cumn.grupoc.myshelf.Firebase.FirebaseBookWrapper" />
+            app:argType="es.upm.etsisi.myBookshelf.Firebase.FirebaseBookWrapper" />
     </fragment>
 </navigation>

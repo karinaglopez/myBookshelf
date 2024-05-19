@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace 'es.upm.etsisi.cumn.grupoc.myshelf'
+    namespace 'es.upm.etsisi.myBookshelf'
     compileSdk 33
 
     lintOptions {
@@ -21,11 +21,11 @@ android {
             storePassword '123456'
             keyPassword '123456'
             keyAlias 'key0'
-
+*/
     }
 
     defaultConfig {
-        applicationId "es.upm.etsisi.cumn.grupoc.myshelf"
+        applicationId "es.upm.etsisi.myBookshelf"
         minSdk 24
         targetSdk 33
         versionCode 1
