@@ -113,6 +113,10 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 bundle.putSerializable("myArg", EBookShelfItem.TO_READ);
                 navController.navigate(R.id.bookLisitingFragment, bundle);
                 break;
+            case R.id.mappingLibraryFragment:
+                Intent intent = new Intent(this, NearbyLibrariesFragment.class);
+                startActivity(intent);
+                break;
         }
         return true;
     }
