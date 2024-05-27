@@ -60,6 +60,7 @@ public class BookInfoAdapter extends RecyclerView.Adapter<BookInfoAdapter.ViewHo
 
             if (cover != null)
                 Picasso.get().load("https://covers.openlibrary.org/b/id/" + cover + "-L.jpg")
+                        .placeholder(R.mipmap.book_shelf_display)
                         .resize(150, 225)
                         .centerCrop().into(binding.imageView12);
 

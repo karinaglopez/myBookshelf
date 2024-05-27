@@ -20,7 +20,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
+import es.upm.etsisi.myBookshelf.Room.BookshelfDatabase;
 import es.upm.etsisi.myBookshelf.databinding.ActivityNavBinding;
 import es.upm.etsisi.myBookshelf.ui.bookshelf.shelfitem.EBookShelfItem;
 
@@ -29,6 +31,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityNavBinding binding;
 
+
+    public static BookshelfDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +41,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         binding = ActivityNavBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
-
+        db = Room.databaseBuilder(getApplicationContext(),
+                BookshelfDatabase.class, "database-name").build();
 
         View view = binding.navView.getHeaderView(0);
         TextView textView = view.findViewById(R.id.userEmail);

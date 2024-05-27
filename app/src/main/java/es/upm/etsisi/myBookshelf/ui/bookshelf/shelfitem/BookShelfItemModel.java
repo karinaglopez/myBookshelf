@@ -17,10 +17,10 @@ import es.upm.etsisi.myBookshelf.Firebase.FirebaseBookWrapper;
 import es.upm.etsisi.myBookshelf.Firebase.FirebaseBook2;
 import es.upm.etsisi.myBookshelf.Firebase.Firebase_Utils;
 import es.upm.etsisi.myBookshelf.REST.OpenBooks.BookResponse;
+import es.upm.etsisi.myBookshelf.REST.OpenBooks.CallBacks.FirebaseBookWrapperCallback;
 import es.upm.etsisi.myBookshelf.REST.OpenBooksAdapter;
+import es.upm.etsisi.myBookshelf.ui.bookshelf.BookListing.BookListingModel;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BookShelfItemModel implements Serializable {
         private EBookShelfItem type;
@@ -58,18 +58,7 @@ public class BookShelfItemModel implements Serializable {
                             bookResponses.add(bookResponseMutableLiveData);
 
                             Call<BookResponse> call = OpenBooksAdapter.getApiService().getBookById(firebaseBook2.getBookID());
-                            call.enqueue(new Callback<BookResponse>() {
-                                @Override
-                                public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
-                                    BookResponse book = response.body();
-                                    bookResponseMutableLiveData.setValue(new FirebaseBookWrapper(firebaseBook2, type, book));
-                                }
-
-                                @Override
-                                public void onFailure(Call<BookResponse> call, Throwable t) {
-                                    Log.i("TEST",  t.toString());
-                                }
-                            });
+                            new FirebaseBookWrapperCallback(bookResponseMutableLiveData, firebaseBook2, call, type);
                         }
 
                     }

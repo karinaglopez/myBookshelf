@@ -95,7 +95,7 @@ public class NearbyLibrariesFragment extends AppCompatActivity implements OnMapR
         map.setOnMyLocationButtonClickListener(this);
         map.setOnMyLocationClickListener(this);
         enableMyLocation();
-        viewNearbyLibraries();
+        //viewNearbyLibraries();
     }
 
     public void viewNearbyLibraries() {
@@ -103,7 +103,8 @@ public class NearbyLibrariesFragment extends AppCompatActivity implements OnMapR
         //Toast.makeText(this, userLocation.getLongitude() + " " +userLocation.getLongitude(), Toast.LENGTH_LONG).show();
 
         //LatLng userLoc = new LatLng(userLocation.getLatitude(), userLocation.getLongitude());
-        Call<BibliotecasMadridResponse> call = BibliotecasMadridAdapter.getApiService().getBibliotecasDataWithLocation(40.46558, -3.689354, 2000);
+        //Call<BibliotecasMadridResponse> call = BibliotecasMadridAdapter.getApiService().getBibliotecasDataWithLocation(40.46558, -3.689354, 2000);
+        Call<BibliotecasMadridResponse> call = BibliotecasMadridAdapter.getApiService().getBibliotecasDataWithLocation(userLocation.latitude, userLocation.longitude, 2000);
 
         call.enqueue(new retrofit2.Callback<BibliotecasMadridResponse>() {
             @Override
@@ -138,6 +139,7 @@ public class NearbyLibrariesFragment extends AppCompatActivity implements OnMapR
                                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15.0f));
                                 CharSequence loc = userLocation.toString();
                                 Toast.makeText(getApplicationContext(), loc, Toast.LENGTH_LONG).show();
+                                viewNearbyLibraries();
                             }
                         }
                     });
