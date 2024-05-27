@@ -110,7 +110,7 @@
     <string name="menu_read">Leídos</string>
     <string name="menu_ISBN">ISBN\n</string>
     <string name="nearby_libraries">Bibliotecas cercanas</string>
-    <string name="title_activity_nearby_libraries">nearby_libraries</string>
+    <string name="title_activity_nearby_libraries">Bibliotecas cercanas</string>
     <string name="permission_rationale_location">permission_rationale_location</string>
     <string name="location_permission_denied">location_permission_denied</string>
     <string name="permission_required_toast">permission_required_toast</string>

@@ -78,7 +78,10 @@ public class BookshelfItemFragment extends Fragment {
                 bookResponse.observe(getViewLifecycleOwner(), (o2) -> {
                     String cover = o2.getBookResponse().getCover();
                     if (cover != null) {
-                        Picasso.get().load("https://covers.openlibrary.org/b/id/" + cover + "-L.jpg")
+                        Picasso picasso = Picasso.get();
+                        picasso.setLoggingEnabled(true);
+                        picasso.load("https://covers.openlibrary.org/b/id/" + cover + "-L.jpg")
+                                .placeholder(R.mipmap.book_shelf_display)
                                 .resize(0, 300)
                                 .centerCrop().into(imageView);
                     }

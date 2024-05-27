@@ -18,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import es.upm.etsisi.myBookshelf.Firebase.FirebaseBookGlobal;
 import es.upm.etsisi.myBookshelf.Firebase.FirebaseBookWrapper;
 import es.upm.etsisi.myBookshelf.REST.OpenBooks.AuthorResponse;
+import es.upm.etsisi.myBookshelf.REST.OpenBooks.CallBacks.AuthorResponseCallback;
 import es.upm.etsisi.myBookshelf.REST.OpenBooksAdapter;
 import es.upm.etsisi.myBookshelf.databinding.FragmentBookDetailsBinding;
 import retrofit2.Call;
@@ -81,17 +82,7 @@ public class BookDetailsFragment extends Fragment {
 
 
         Call<AuthorResponse> call = OpenBooksAdapter.getApiService().getAuthorById(firebaseBookWrapper.getBookResponse().getAuthorKey());
-        call.enqueue(new Callback<AuthorResponse>() {
-            @Override
-            public void onResponse(Call<AuthorResponse> call, Response<AuthorResponse> response) {
-                binding.bookAuthor.setText(response.body().getName());
-            }
-
-            @Override
-            public void onFailure(Call<AuthorResponse> call, Throwable t) {
-
-            }
-        });
+        new AuthorResponseCallback(binding.bookAuthor, call);
 
         binding.bookRating.setRating(firebaseBookWrapper.getFirebaseBook2().getScore());
 

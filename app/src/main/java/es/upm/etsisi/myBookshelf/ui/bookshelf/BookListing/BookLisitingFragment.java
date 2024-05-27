@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import es.upm.etsisi.myBookshelf.Firebase.FirebaseBookWrapper;
 import es.upm.etsisi.myBookshelf.R;
+import es.upm.etsisi.myBookshelf.Room.BookshelfDatabase;
 import es.upm.etsisi.myBookshelf.databinding.FragmentBookLisitingBinding;
 import es.upm.etsisi.myBookshelf.ui.bookshelf.shelfitem.EBookShelfItem;
 
@@ -89,6 +91,7 @@ public class BookLisitingFragment extends Fragment {
                 bookShelfItemEAux = null;
         }
 
+
         BookListingModel bookListingModel = new BookListingModel(eBookShelfItem);
 
         bookListingModel.getBookResponseList().observe(getViewLifecycleOwner(), (o) -> {
@@ -98,9 +101,7 @@ public class BookLisitingFragment extends Fragment {
                     firebaseBookWrappers.add(o2);
                     binding.listBook.setAdapter(new BookInfoAdapter(firebaseBookWrappers, eBookShelfItem, bookShelfItemEAux, this));
                 });
-
             }
-
         });
 
 

@@ -51,6 +51,7 @@ public class AddBookTileAdapter extends RecyclerView.Adapter<AddBookTileAdapter.
 
             if (cover != null)
                 Picasso.get().load("https://covers.openlibrary.org/b/id/" + cover +"-L.jpg")
+                        .placeholder(R.mipmap.book_shelf_display)
                         .resize(150, 300)
                         .centerCrop().into(binding.imageView12);
 
