@@ -24,5 +24,10 @@
         android:menuCategory="secondary"
         android:icon="@drawable/ic_map_black_24dp"
         android:title="@string/nearby_libraries" />
+        <item
+            android:id="@+id/ambientTemperatureFragment"
+            android:menuCategory="secondary"
+            android:icon="@drawable/ic_thermostat_half_24dp"
+            android:title="@string/ambient_temperature" />
     </group>
 </menu>

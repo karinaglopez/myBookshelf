@@ -25,6 +25,7 @@ import androidx.room.Room;
 import es.upm.etsisi.myBookshelf.Room.BookshelfDatabase;
 import es.upm.etsisi.myBookshelf.databinding.ActivityNavBinding;
 import es.upm.etsisi.myBookshelf.ui.bookshelf.shelfitem.EBookShelfItem;
+import es.upm.etsisi.myBookshelf.ui.temperatureSensor.AmbientTemperatureFragment;
 
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
@@ -71,7 +72,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.bookShelfListFragment, R.id.bookAddFragment, R.id.bookLisitingFragment)
+                R.id.bookShelfListFragment, R.id.bookAddFragment, R.id.bookLisitingFragment, R.id.mappingLibraryFragment, R.id.ambientTemperatureFragment, R.id.ambientTemperatureFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav);
@@ -104,6 +105,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         binding.drawerLayout.closeDrawer(GravityCompat.START);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav);
         Bundle bundle = new Bundle();
+        Intent intent = new Intent();
         switch (item.getItemId()) {
             case R.id.bookShelfListFragment:
                 navController.navigate(R.id.bookShelfListFragment);
@@ -118,8 +120,13 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 navController.navigate(R.id.bookLisitingFragment, bundle);
                 break;
             case R.id.mappingLibraryFragment:
-                Intent intent = new Intent(this, NearbyLibrariesFragment.class);
+                intent = new Intent(this, NearbyLibrariesFragment.class);
                 startActivity(intent);
+                break;
+            case R.id.ambientTemperatureFragment:
+                //intent = new Intent(this, AmbientTemperature.class);
+                //startActivity(intent);
+                navController.navigate(R.id.ambientTemperatureFragment);
                 break;
         }
         return true;

@@ -8,4 +8,6 @@ public class Firebase_Utils {
     public static DatabaseReference getRootFirebase() {
         return FirebaseDatabase.getInstance().getReference("users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
+
+
 }

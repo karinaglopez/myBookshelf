@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.temperatureSensor.AmbientTemperatureFragment">
+
+
+    <TextView
+        android:id="@+id/current_temperature_label"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/abril_fatface"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/Universe"
+        android:text="@string/temperatura_del_ambiente"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/current_temperature"
+        android:layout_width="272dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/historic_temperature_label"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:layout_marginBottom="15dp"
+        android:fontFamily="@font/abril_fatface"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/historial_de_temperatura"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/Universe"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="364dp"
+        android:layout_height="202dp"
+        android:layout_gravity="center_horizontal" />
+
+
+
+</LinearLayout>

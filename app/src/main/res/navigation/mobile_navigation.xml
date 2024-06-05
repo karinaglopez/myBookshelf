@@ -60,4 +60,13 @@
             android:name="myArg"
             app:argType="es.upm.etsisi.myBookshelf.Firebase.FirebaseBookWrapper" />
     </fragment>
+    <fragment
+        android:id="@+id/ambientTemperatureFragment"
+        android:name="es.upm.etsisi.myBookshelf.ui.temperatureSensor.AmbientTemperatureFragment"
+        android:label="@string/ambient_temperature"
+        tools:layout="@layout/fragment_ambient_temperature" />
+    <activity
+        android:id="@+id/nearbyLibrariesFragment"
+        android:name="es.upm.etsisi.myBookshelf.NearbyLibrariesFragment"
+        android:label="NearbyLibrariesFragment" />
 </navigation>
