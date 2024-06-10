@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,16 +51,13 @@ public class AmbientTemperatureFragment extends Fragment implements SensorEventL
 
     private View view;
 
-public static AmbientTemperatureFragment newInstance() {
-    return new AmbientTemperatureFragment();}
-
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         sensorManager = (SensorManager) Objects.requireNonNull(getContext()).getSystemService(Context.SENSOR_SERVICE);
-        temperature = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        temperature = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Nullable
@@ -80,34 +79,70 @@ public static AmbientTemperatureFragment newInstance() {
 
         // Update the graph
         //updateTemperatureGraph();
+        init();
 
         return view;
     }
 
-        @Override
-        public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-            // Do something here if sensor accuracy changes.
-        }
+    float lastX = 0.0f;
 
-        @Override
-        public final void onSensorChanged(SensorEvent event) {
-            float currentTemperature = event.values[0];
-            TextView temperatureView = (TextView) view.findViewById(R.id.current_temperature);
-            temperatureView.setText(String.format(Locale.getDefault(), "%.2f", currentTemperature));
+    public void init() {
+        DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
 
-            // Save the current temperature to Firebase
-            saveTemperatureToFirebase(currentTemperature);
+        userTemperatureHistory.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                // Create a new series for the graph
+                List<Entry> entries = new ArrayList<>();
 
-            // Update the graph
-            updateTemperatureGraph();
-        }
 
-        @Override
-        public void onResume() {
-            // Register a listener for the sensor.
-            super.onResume();
-            sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL);
-        }
+                // Add each temperature to the series
+                for (DataSnapshot snapshot : task.getResult().getChildren()) {
+                    float temperature = snapshot.getValue(Float.class);
+                    entries.add(new Entry(lastX++, temperature));
+                }
+
+                // Create a dataset
+                LineDataSet dataSet = new LineDataSet(entries, "Temperature");
+                dataSet.setColor(Color.BLUE);
+                dataSet.setValueTextColor(Color.BLACK);
+
+                // Get a reference to the LineChart
+                LineChart chart = (LineChart) view.findViewById(R.id.chart);
+                chart.clear();
+                // Clear the old data and add the new series
+                LineData lineData = new LineData(dataSet);
+                chart.setData(lineData);
+                chart.invalidate(); // refresh the chart
+            }
+        });
+
+    }
+
+    @Override
+    public final void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // Do something here if sensor accuracy changes.
+    }
+
+    @Override
+    public final void onSensorChanged(SensorEvent event) {
+        float currentTemperature = event.values[0];
+        TextView temperatureView = (TextView) view.findViewById(R.id.current_temperature);
+        temperatureView.setText(String.format(Locale.getDefault(), "%.2f", currentTemperature));
+
+        // Save the current temperature to Firebase
+        saveTemperatureToFirebase(currentTemperature);
+
+        // Update the graph
+        updateTemperatureGraph(currentTemperature);
+    }
+
+    @Override
+    public void onResume() {
+        // Register a listener for the sensor.
+        super.onResume();
+        sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
     @Override
     public void onPause() {
@@ -116,67 +151,23 @@ public static AmbientTemperatureFragment newInstance() {
         sensorManager.unregisterListener(this);
     }
 
-private void saveTemperatureToFirebase(float temperature) {
-    // Get a reference to the Firebase database
-    DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
+    private void saveTemperatureToFirebase(float temperature) {
+        // Get a reference to the Firebase database
+        DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
 
-    // Save the current temperature to the database
-    userTemperatureHistory.push().setValue(temperature);
-}
+        // Save the current temperature to the database
+        userTemperatureHistory.push().setValue(temperature);
+    }
 
-private void updateTemperatureGraph() {
-    // Get a reference to the Firebase database
-    DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
+    private void updateTemperatureGraph(float temperature) {
+        LineChart chart = (LineChart) view.findViewById(R.id.chart);
+        if (chart.getLineData() == null)
+            return;
 
-    // Retrieve the temperature history
-    userTemperatureHistory.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get a reference to the Firebase database
-                DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
-
-                // Retrieve the temperature history
-                userTemperatureHistory.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // Create a new series for the graph
-                        List<Entry> entries = new ArrayList<>();
-                        float lastX = 0.0f;
-
-                        // Add each temperature to the series
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            float temperature = snapshot.getValue(Float.class);
-                            entries.add(new Entry(lastX++, temperature));
-                        }
-
-                        // Create a dataset
-                        LineDataSet dataSet = new LineDataSet(entries, "Temperature");
-                        dataSet.setColor(Color.BLUE);
-                        dataSet.setValueTextColor(Color.BLACK);
-
-                        // Get a reference to the LineChart
-                        LineChart chart = (LineChart) view.findViewById(R.id.chart);
-                        chart.clear();
-                        // Clear the old data and add the new series
-                        LineData lineData = new LineData(dataSet);
-                        chart.setData(lineData);
-                        chart.invalidate(); // refresh the chart
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-
-                });
-        }
-
-        @Override
-        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-        }
-
-    });
-}
+        LineData lineData = chart.getLineData();
+        lineData.addEntry(new Entry(lineData.getEntryCount(), temperature), 0);
+        chart.clear();
+        chart.setData(lineData);
+        chart.invalidate();
+    }
 }
