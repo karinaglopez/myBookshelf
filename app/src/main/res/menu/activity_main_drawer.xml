@@ -25,9 +25,9 @@
         android:icon="@drawable/ic_map_black_24dp"
         android:title="@string/nearby_libraries" />
         <item
-            android:id="@+id/ambientTemperatureFragment"
+            android:id="@+id/brightnessSensorFragment"
             android:menuCategory="secondary"
             android:icon="@drawable/ic_thermostat_half_24dp"
-            android:title="@string/ambient_temperature" />
+            android:title="@string/brightness_sensor" />
     </group>
 </menu>

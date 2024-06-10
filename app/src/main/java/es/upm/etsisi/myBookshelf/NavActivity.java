@@ -25,7 +25,6 @@ import androidx.room.Room;
 import es.upm.etsisi.myBookshelf.Room.BookshelfDatabase;
 import es.upm.etsisi.myBookshelf.databinding.ActivityNavBinding;
 import es.upm.etsisi.myBookshelf.ui.bookshelf.shelfitem.EBookShelfItem;
-import es.upm.etsisi.myBookshelf.ui.temperatureSensor.AmbientTemperatureFragment;
 
 public class NavActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
 
@@ -72,7 +71,7 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.bookShelfListFragment, R.id.bookAddFragment, R.id.bookLisitingFragment, R.id.mappingLibraryFragment, R.id.ambientTemperatureFragment, R.id.ambientTemperatureFragment)
+                R.id.bookShelfListFragment, R.id.bookAddFragment, R.id.bookLisitingFragment, R.id.mappingLibraryFragment, R.id.brightnessSensorFragment, R.id.brightnessSensorFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_nav);
@@ -123,10 +122,8 @@ public class NavActivity extends AppCompatActivity implements NavigationView.OnN
                 intent = new Intent(this, NearbyLibrariesFragment.class);
                 startActivity(intent);
                 break;
-            case R.id.ambientTemperatureFragment:
-                //intent = new Intent(this, AmbientTemperature.class);
-                //startActivity(intent);
-                navController.navigate(R.id.ambientTemperatureFragment);
+            case R.id.brightnessSensorFragment:
+                navController.navigate(R.id.brightnessSensorFragment);
                 break;
         }
         return true;

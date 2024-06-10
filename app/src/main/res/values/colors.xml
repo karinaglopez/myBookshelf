@@ -8,8 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="peach">#FFECCD</color>
-    <color name="Universe">#1D2364</color>
-    <color name="UniverseVariant">#283087</color>
-    <color name="UniverseNight">#404CD6</color>
+    <color name="Universe">#194B5F</color>
+    <color name="UniverseVariant">#102933</color>
+    <color name="UniverseNight">#3293BA</color>
     <color name="AccentPeach">#EF980A</color>
 </resources>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#1D2364"
+    android:background="@color/Universe"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -42,5 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:text="Cerrar sesión"
-        app:tint="@color/peach" />
+        app:tint="@color/UniverseNight"
+        app:background="@color/peach"/>
 </LinearLayout>

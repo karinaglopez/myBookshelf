@@ -11,6 +11,7 @@
     <include
         android:id="@+id/app_bar_nav"
         layout="@layout/app_bar_nav"
+        app:tint="@color/peach"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -21,5 +22,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/fragment_nav_header_nav"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer"
+        app:tint="@color/peach" />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,6 +1,4 @@
-package es.upm.etsisi.myBookshelf.ui.temperatureSensor;
-
-import androidx.lifecycle.ViewModelProvider;
+package es.upm.etsisi.myBookshelf.ui.brightnessSensor;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -25,29 +23,26 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.ValueEventListener;
 import com.github.mikephil.charting.data.Entry;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Random;
 
 import es.upm.etsisi.myBookshelf.Firebase.Firebase_Utils;
 import es.upm.etsisi.myBookshelf.R;
-import es.upm.etsisi.myBookshelf.databinding.FragmentAmbientTemperatureBinding;
+import es.upm.etsisi.myBookshelf.databinding.FragmentBrightnessSensorBinding;
 
-public class AmbientTemperatureFragment extends Fragment implements SensorEventListener  {
+public class BrightnessSensorFragment extends Fragment implements SensorEventListener  {
 
     //private MainViewModel mViewModel;
     private SensorManager sensorManager;
-    private Sensor temperature;
-    private FragmentAmbientTemperatureBinding binding;
+    private Sensor brigthnessSensor;
+    private FragmentBrightnessSensorBinding binding;
 
-    private String TEMPERATURE_PATH = "temperature";
+    private final String BRIGHTNESS_PATH = "brightness";
 
     private View view;
 
@@ -56,54 +51,39 @@ public class AmbientTemperatureFragment extends Fragment implements SensorEventL
         super.onCreate(savedInstanceState);
 
         sensorManager = (SensorManager) Objects.requireNonNull(getContext()).getSystemService(Context.SENSOR_SERVICE);
-        temperature = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL);
+        brigthnessSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        sensorManager.registerListener(this, brigthnessSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = FragmentAmbientTemperatureBinding.inflate(inflater, container, false);
+        binding = FragmentBrightnessSensorBinding.inflate(inflater, container, false);
         Bundle bundle = getArguments();
-        //binding.currentTemperature.setText(String.format(Locale.getDefault(), "%.2f", 100.0));
-        view = inflater.inflate(R.layout.fragment_ambient_temperature, container, false);
-
-        // Generate a random temperature value
-        //float randomTemperature = new Random().nextFloat() * 100;
-        //TextView temperatureView = (TextView) view.findViewById(R.id.current_temperature);
-        //temperatureView.setText(String.format(Locale.getDefault(), "%.2f", randomTemperature));
-
-        // Save the random temperature to Firebase
-       //saveTemperatureToFirebase(randomTemperature);
-
-        // Update the graph
-        //updateTemperatureGraph();
+        view = inflater.inflate(R.layout.fragment_brightness_sensor, container, false);
         init();
-
         return view;
     }
 
     float lastX = 0.0f;
 
     public void init() {
-        DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
+        DatabaseReference userBrightnessHistory = Firebase_Utils.getRootFirebase().child(BRIGHTNESS_PATH);
 
-        userTemperatureHistory.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        userBrightnessHistory.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 // Create a new series for the graph
                 List<Entry> entries = new ArrayList<>();
 
-
-                // Add each temperature to the series
                 for (DataSnapshot snapshot : task.getResult().getChildren()) {
-                    float temperature = snapshot.getValue(Float.class);
-                    entries.add(new Entry(lastX++, temperature));
+                    float brightness = snapshot.getValue(Float.class);
+                    entries.add(new Entry(lastX++, brightness));
                 }
 
                 // Create a dataset
-                LineDataSet dataSet = new LineDataSet(entries, "Temperature");
+                LineDataSet dataSet = new LineDataSet(entries, "Brightness");
                 dataSet.setColor(Color.BLUE);
                 dataSet.setValueTextColor(Color.BLACK);
 
@@ -126,22 +106,18 @@ public class AmbientTemperatureFragment extends Fragment implements SensorEventL
 
     @Override
     public final void onSensorChanged(SensorEvent event) {
-        float currentTemperature = event.values[0];
-        TextView temperatureView = (TextView) view.findViewById(R.id.current_temperature);
-        temperatureView.setText(String.format(Locale.getDefault(), "%.2f", currentTemperature));
-
-        // Save the current temperature to Firebase
-        saveTemperatureToFirebase(currentTemperature);
-
-        // Update the graph
-        updateTemperatureGraph(currentTemperature);
+        float currentBrightness = event.values[0];
+        TextView brightnessView = (TextView) view.findViewById(R.id.current_brightness);
+        brightnessView.setText(String.format(Locale.getDefault(), "%.2f", currentBrightness));
+        saveSensorDataToFirebase(currentBrightness);
+        updateSensorGraph(currentBrightness);
     }
 
     @Override
     public void onResume() {
         // Register a listener for the sensor.
         super.onResume();
-        sensorManager.registerListener(this, temperature, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, brigthnessSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -151,21 +127,21 @@ public class AmbientTemperatureFragment extends Fragment implements SensorEventL
         sensorManager.unregisterListener(this);
     }
 
-    private void saveTemperatureToFirebase(float temperature) {
+    private void saveSensorDataToFirebase(float brightness) {
         // Get a reference to the Firebase database
-        DatabaseReference userTemperatureHistory = Firebase_Utils.getRootFirebase().child(TEMPERATURE_PATH);
+        DatabaseReference userSensorHistory = Firebase_Utils.getRootFirebase().child(BRIGHTNESS_PATH);
 
-        // Save the current temperature to the database
-        userTemperatureHistory.push().setValue(temperature);
+        // Save the current brightness to the database
+        userSensorHistory.push().setValue(brightness);
     }
 
-    private void updateTemperatureGraph(float temperature) {
+    private void updateSensorGraph(float brightness) {
         LineChart chart = (LineChart) view.findViewById(R.id.chart);
         if (chart.getLineData() == null)
             return;
 
         LineData lineData = chart.getLineData();
-        lineData.addEntry(new Entry(lineData.getEntryCount(), temperature), 0);
+        lineData.addEntry(new Entry(lineData.getEntryCount(), brightness), 0);
         chart.clear();
         chart.setData(lineData);
         chart.invalidate();

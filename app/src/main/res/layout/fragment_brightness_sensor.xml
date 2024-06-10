@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.temperatureSensor.AmbientTemperatureFragment">
+    tools:context=".ui.brightnessSensor.BrightnessSensorFragment">
 
 
     <TextView
-        android:id="@+id/current_temperature_label"
+        android:id="@+id/current_brightness_label"
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_marginTop="25dp"
@@ -18,14 +18,14 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:textColor="@color/Universe"
-        android:text="@string/temperatura_del_ambiente"
+        android:text="@string/brightness_sensor_text"
         android:textAlignment="center"
         android:textSize="25sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/current_temperature"
+        android:id="@+id/current_brightness"
         android:layout_width="272dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
@@ -35,14 +35,14 @@
         android:textSize="24sp"/>
 
     <TextView
-        android:id="@+id/historic_temperature_label"
+        android:id="@+id/historic_brightness_label"
         android:layout_width="match_parent"
         android:layout_height="77dp"
         android:layout_marginBottom="15dp"
         android:fontFamily="@font/abril_fatface"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:text="@string/historial_de_temperatura"
+        android:text="@string/brightness_history"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/Universe"
